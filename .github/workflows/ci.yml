@@ -1,5 +1,5 @@
-name = CI/CD with Github Actions
-    
+name: CI/CD with Github Actions
+
 on:
   push:
     branches:
@@ -9,27 +9,27 @@ jobs:
   build:
     runs-on: ubuntu-latest 
 
-steps:
-- name: Checkout Repository
-  uses: actions/checkout@v2
-- name: Set up Node.js
-  uses: actions/setup-node@v3
-  with:
-    node-version: '14'
-- name: Install Dependencies
-  run: npm install
-- name: Run Tests
-  run: npm test
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '14'
+    - name: Install Dependencies
+      run: npm install
+    - name: Run Tests
+      run: npm test
 
-deploy:
-  needs: build
-  runs-on: ubuntu-latest
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
 
-steps:
-- name: Deploy to Production
-  run: |
-    if [ ${{ needs.build.result }} = 'success' ]; then
-      echo "Deployment logic goes here"
-    else
-      echo "Build failed, skipping deployment"
-    fi 
+    steps:
+    - name: Deploy to Production
+      run: |
+        if [ ${{ needs.build.result }} = 'success' ]; then
+          echo "Deployment logic goes here"
+        else
+          echo "Build failed, skipping deployment"
+        fi
